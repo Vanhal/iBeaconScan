@@ -1,5 +1,4 @@
 # test BLE Scanning software
-# jcs 6/8/2014
 
 import blescan
 import sys
@@ -22,5 +21,16 @@ while True:
 	returnedList = blescan.parse_events(sock, 10)
 	print "----------"
 	for beacon in returnedList:
-		print beacon
+		Adstring = beacon[0]
+		Adstring += ","
+		Adstring += beacon[1]
+		Adstring += ","
+		Adstring += "%i" % beacon[2]
+		Adstring += ","
+		Adstring += "%i" % beacon[3]
+		Adstring += ","
+		Adstring += "%i" % beacon[4]
+		Adstring += ","
+		Adstring += "%i" % beacon[5]
+		print Adstring
 

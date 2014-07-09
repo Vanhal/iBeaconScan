@@ -78,32 +78,32 @@ def parse_events(sock, loop_count=100):
     for i in range(0, loop_count):
         pkt = sock.recv(255)
         ptype, event, plen = struct.unpack("BBB", pkt[:3])
-		if event == bluez.EVT_INQUIRY_RESULT_WITH_RSSI:
-			i =0
-		elif event == bluez.EVT_NUM_COMP_PKTS:
-			i =0
-		elif event == bluez.EVT_DISCONN_COMPLETE:
-			i =0 
+	if event == bluez.EVT_INQUIRY_RESULT_WITH_RSSI:
+		i =0
+	elif event == bluez.EVT_NUM_COMP_PKTS:
+		i =0
+	elif event == bluez.EVT_DISCONN_COMPLETE:
+		i =0 
         elif event == LE_META_EVENT:
-            subevent, = struct.unpack("B", pkt[3])
-            pkt = pkt[4:]
-            if subevent == EVT_LE_CONN_COMPLETE:
-                le_handle_connection_complete(pkt)
-            elif subevent == EVT_LE_ADVERTISING_REPORT:
-                #print "advertising report"
-                num_reports = struct.unpack("B", pkt[0])[0]
-                report_pkt_offset = 0
-                for i in range(0, num_reports):
-					# build the return list
-					Advalues = []
-					Advalues[0] = packed_bdaddr_to_string(pkt[report_pkt_offset + 3:report_pkt_offset + 9])
-					Advalues[1] = returnstringpacket(pkt[report_pkt_offset -22: report_pkt_offset - 6])
-					Advalues[2] = returnnumberpacket(pkt[report_pkt_offset -6: report_pkt_offset - 4])
-					Advalues[3] = returnnumberpacket(pkt[report_pkt_offset -4: report_pkt_offset - 2])
-					Advalues[4] = struct.unpack("b", pkt[report_pkt_offset -2])
-					Advalues[5] = struct.unpack("b", pkt[report_pkt_offset -1])
-					myFullList.append(Advalues)
-				done = True
+            	subevent, = struct.unpack("B", pkt[3])
+            	pkt = pkt[4:]
+            	if subevent == EVT_LE_CONN_COMPLETE:
+            	    	le_handle_connection_complete(pkt)
+            	elif subevent == EVT_LE_ADVERTISING_REPORT:
+            	    	#print "advertising report"
+            	    	num_reports = struct.unpack("B", pkt[0])[0]
+            	    	report_pkt_offset = 0
+            	    	for i in range(0, num_reports):
+				# build the return list
+				Advalues = []
+				Advalues[0] = packed_bdaddr_to_string(pkt[report_pkt_offset + 3:report_pkt_offset + 9])
+				Advalues[1] = returnstringpacket(pkt[report_pkt_offset -22: report_pkt_offset - 6])
+				Advalues[2] = returnnumberpacket(pkt[report_pkt_offset -6: report_pkt_offset - 4])
+				Advalues[3] = returnnumberpacket(pkt[report_pkt_offset -4: report_pkt_offset - 2])
+				Advalues[4] = struct.unpack("b", pkt[report_pkt_offset -2])
+				Advalues[5] = struct.unpack("b", pkt[report_pkt_offset -1])
+				myFullList.append(Advalues)
+			done = True
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, old_filter )
     return myFullList
 

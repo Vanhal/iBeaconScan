@@ -81,9 +81,9 @@ def parse_events(sock, loop_count=100):
 		if event == bluez.EVT_INQUIRY_RESULT_WITH_RSSI:
 			i =0
 		elif event == bluez.EVT_NUM_COMP_PKTS:
-            i =0 
-        elif event == bluez.EVT_DISCONN_COMPLETE:
-            i =0 
+			i =0
+		elif event == bluez.EVT_DISCONN_COMPLETE:
+			i =0 
         elif event == LE_META_EVENT:
             subevent, = struct.unpack("B", pkt[3])
             pkt = pkt[4:]

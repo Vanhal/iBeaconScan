@@ -96,12 +96,12 @@ def parse_events(sock, loop_count=100):
             	    	for i in range(0, num_reports):
 				# build the return list
 				Advalues = []
-				Advalues[0] = packed_bdaddr_to_string(pkt[report_pkt_offset + 3:report_pkt_offset + 9])
-				Advalues[1] = returnstringpacket(pkt[report_pkt_offset -22: report_pkt_offset - 6])
-				Advalues[2] = returnnumberpacket(pkt[report_pkt_offset -6: report_pkt_offset - 4])
-				Advalues[3] = returnnumberpacket(pkt[report_pkt_offset -4: report_pkt_offset - 2])
-				Advalues[4] = struct.unpack("b", pkt[report_pkt_offset -2])
-				Advalues[5] = struct.unpack("b", pkt[report_pkt_offset -1])
+				Advalues.append(packed_bdaddr_to_string(pkt[report_pkt_offset + 3:report_pkt_offset + 9]))
+				Advalues.append(returnstringpacket(pkt[report_pkt_offset -22: report_pkt_offset - 6]))
+				Advalues.append(returnnumberpacket(pkt[report_pkt_offset -6: report_pkt_offset - 4]))
+				Advalues.append(returnnumberpacket(pkt[report_pkt_offset -4: report_pkt_offset - 2]))
+				Advalues.append(struct.unpack("b", pkt[report_pkt_offset -2]))
+				Advalues.append(struct.unpack("b", pkt[report_pkt_offset -1]))
 				myFullList.append(Advalues)
 			done = True
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, old_filter )
